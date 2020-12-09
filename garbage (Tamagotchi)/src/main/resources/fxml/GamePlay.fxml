@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="world.ucode.Controller.GamePlayController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/638357.jpg" />
+         </image>
+      </ImageView>
+      <ProgressBar fx:id="healthBar" layoutX="20.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" progress="0.0" />
+      <Text layoutX="50.0" layoutY="40.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="Health" />
+      <Button onAction="#medBaton" layoutX="33.0" layoutY="60.0" mnemonicParsing="false" text="Medicine" />
+      <ProgressBar fx:id="happinessBar" layoutX="135.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" progress="0.0" />
+      <Text layoutX="153.0" layoutY="40.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="Happiness" />
+      <Button onAction="#playBaton" layoutX="163.0" layoutY="60.0" mnemonicParsing="false" text="Play" />
+      <ProgressBar fx:id="hungerBar" layoutX="250.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" progress="0.0" />
+      <Text layoutX="277.0" layoutY="40.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="Hunger" />
+      <Button onAction="#feedBaton" layoutX="276.0" layoutY="60.0" mnemonicParsing="false" text="Feed" />
+      <ProgressBar fx:id="thirstBar" layoutX="365.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" progress="0.0" />
+      <Text layoutX="397.0" layoutY="40.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="Thirst" />
+      <Button onAction="#waterBaton" layoutX="388.0" layoutY="60.0" mnemonicParsing="false" text="Water" />
+      <ProgressBar fx:id="cleanlinessBar" layoutX="480.0" layoutY="20.0" prefHeight="30.0" prefWidth="100.0" progress="0.0" />
+      <Text layoutX="495.0" layoutY="40.0" opacity="0.7" strokeType="OUTSIDE" strokeWidth="0.0" text="Cleanliness" />
+      <Button onAction="#cleanBaton" layoutX="494.0" layoutY="60.0" mnemonicParsing="false" text="Clean up" />
+      <ImageView fx:id="imagePet" fitHeight="150.0" fitWidth="150.0" layoutX="225.0" layoutY="200.0" pickOnBounds="true">
+         <image>
+            <Image url="@../images/1.jpg" />
+         </image>
+      </ImageView>
+      <Button onAction="#SnEBaton" layoutX="14.0" layoutY="359.0" mnemonicParsing="false" text="Save and exit" />
+   </children>
+</AnchorPane>
