@@ -29,17 +29,17 @@ public class CreateController {
 
     @FXML
     public void createBaton() throws Exception {
-        /*Database db = new Database();
+        Database db = new Database();
         int status = db.createPet(fieldName.getText(), fieldPass.getText(),
                                     Double.parseDouble(fieldMaxHP.getText()), intImages);
-        printStatus(status);*/
+        printStatus(status);
 
-        /*if(status == 1) {
+        if(status == 1) {
             Main main = new Main();
             Main.scene = Main.SceneLoad.GamePlayScreen;
             main.start(Main.currentStage);
             db.loadPet(fieldName.getText());
-        }*/
+        }
     }
 
     @FXML

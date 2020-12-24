@@ -86,7 +86,7 @@ public class GamePlayController implements Initializable {
 
     public void upProgressStat(ProgressBar bar) {
         if(bar == healthBar) {
-            health += upProgress;
+            health += upProgress * 100;
             if (health > maxHP) {
                 health = maxHP;
             }

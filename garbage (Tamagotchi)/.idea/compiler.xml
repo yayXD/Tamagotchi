@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Tamagotchi" />
         <module name="garbage" />
+        <module name="garbage (Tamagotchi)" />
       </profile>
     </annotationProcessing>
   </component>

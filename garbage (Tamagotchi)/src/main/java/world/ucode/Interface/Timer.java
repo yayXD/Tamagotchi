@@ -1,6 +1,7 @@
 package world.ucode.Interface;
 
 import javafx.animation.AnimationTimer;
+import javafx.geometry.NodeOrientation;
 import world.ucode.Controller.GamePlayController;
 
 import java.util.Random;
@@ -8,13 +9,17 @@ import java.util.Random;
 public class Timer extends AnimationTimer {
 
     private int millisecond = 0;
+    private int XYStep = 0;
 
     private int moveToX = 0;
     private int moveToY = 0;
     private double stepToX = 0d;
     private double stepToY = 0d;
     private boolean moving = false;
-    private boolean movingWay = false; // false - left, true - right
+    private boolean movingXSide = false; // false - left, true - right
+    private boolean movingYSide = false; // false - down, true - up
+    private boolean movingXEnd = false;
+    private boolean movingYEnd = false;
 
     @Override
     public void handle(long l) {
@@ -40,72 +45,95 @@ public class Timer extends AnimationTimer {
         } else {
             MovePet();
 
-            contr.health -= 0.0002;
-            contr.hunger -= 0.0005;
-            contr.happiness -= 0.0003;
-            contr.thirst -= 0.0005;
-            contr.cleanliness -= 0.0003;
+            contr.health -= contr.health / 10000;
+            contr.hunger -= 0.00004;
+            contr.happiness -= 0.00003;
+            contr.thirst -= 0.00005;
+            contr.cleanliness -= 0.00003;
             contr.setProgressBars(contr.health, contr.maxHP, contr.happiness, contr.hunger, contr.thirst, contr.cleanliness);
         }
     }
 
     private void MovePet() {
-        System.out.println(millisecond);
-        if(moving) {
-            GamePlayController contr = Main.loaderPlay.getController();
+        GamePlayController contr = Main.loaderPlay.getController();
 
-            System.out.println("Get X: " + contr.imagePet.getX());
+        if(moving) {
+            XYStep++;
+
+            /*System.out.println("Get X: " + contr.imagePet.getLayoutX());
             System.out.println("moveToX: " + moveToX);
             System.out.println("stepToX: " + stepToX);
             System.out.println();
-            System.out.println("Get Y: " + contr.imagePet.getY());
+            System.out.println("Get Y: " + contr.imagePet.getLayoutY());
             System.out.println("moveToY: " + moveToY);
             System.out.println("stepToY: " + stepToY);
-            System.out.println();
+            System.out.println();*/
 
-            if(contr.imagePet.getX() < moveToX) {
-                contr.imagePet.setX(contr.imagePet.getX() + stepToX);
-                if(contr.imagePet.getX() > moveToX) {
-                    contr.imagePet.setX(moveToX);
-                    moving = false;
+            if(movingXSide && XYStep % 2 == 0 && !movingXEnd) {
+                contr.imagePet.setLayoutX(contr.imagePet.getLayoutX() + stepToX);
+                if(contr.imagePet.getLayoutX() > moveToX) {
+                    contr.imagePet.setLayoutX(moveToX);
+                    movingXEnd = true;
                 }
-            } else if(contr.imagePet.getX() > moveToX) {
-                contr.imagePet.setX(contr.imagePet.getX() - stepToX);
-                if(contr.imagePet.getX() < moveToX) {
-                    contr.imagePet.setX(moveToX);
-                    moving = false;
+            } else if(!movingXSide && XYStep % 2 == 0 && !movingXEnd) {
+                contr.imagePet.setLayoutX(contr.imagePet.getLayoutX() - stepToX);
+                if(contr.imagePet.getLayoutX() < moveToX) {
+                    contr.imagePet.setLayoutX(moveToX);
+                    movingXEnd = true;
                 }
-            } else if(contr.imagePet.getY() < moveToY) {
-                contr.imagePet.setY(contr.imagePet.getY() + stepToY);
-                if(contr.imagePet.getY() > moveToY) {
-                    contr.imagePet.setY(moveToY);
-                    moving = false;
+            } else if(!movingYSide && XYStep % 2 != 0 && !movingYEnd) {
+                contr.imagePet.setLayoutY(contr.imagePet.getLayoutY() + stepToY);
+                if(contr.imagePet.getLayoutY() > moveToY) {
+                    contr.imagePet.setLayoutY(moveToY);
+                    movingYEnd = true;
                 }
-            } else if(contr.imagePet.getY() > moveToY) {
-                contr.imagePet.setY(contr.imagePet.getY() - stepToY);
-                if(contr.imagePet.getY() < moveToY) {
-                    contr.imagePet.setY(moveToY);
-                    moving = false;
+            } else if(movingYSide && XYStep % 2 != 0 && !movingYEnd) {
+                contr.imagePet.setLayoutY(contr.imagePet.getLayoutY() - stepToY);
+                if(contr.imagePet.getLayoutY() < moveToY) {
+                    contr.imagePet.setLayoutY(moveToY);
+                    movingYEnd = true;
                 }
-            } else {
+            } else if(movingXEnd && movingYEnd) {
                 moving = false;
+                XYStep = 0;
             }
-        } else if(millisecond == 1500) {
-            GamePlayController contr = Main.loaderPlay.getController();
+        } else if(millisecond > getRandomNumberIntsMilliS()) {
 
             moveToX = getRandomNumberIntsX();
             moveToY = getRandomNumberIntsY();
 
-            if(contr.imagePet.getX() < moveToX) {
-                int x = contr.imagePet.getX()
+            if(contr.imagePet.getLayoutX() < moveToX) {
+                stepToX = (moveToX - contr.imagePet.getLayoutX()) / 100d;
+                contr.imagePet.nodeOrientationProperty().setValue(NodeOrientation.RIGHT_TO_LEFT);
+                movingXSide = true;
+            } else if(contr.imagePet.getLayoutX() > moveToX) {
+                stepToX = (contr.imagePet.getLayoutX() - moveToX) / 100d;
+                contr.imagePet.nodeOrientationProperty().setValue(NodeOrientation.LEFT_TO_RIGHT);
+                movingXSide = false;
+            } else {
+                moveToX += 1d;
+                stepToX += 1d;
+                movingXSide = true;
             }
 
-            stepToX = moveToX / 1000;
-            stepToY = moveToY / 1000;
+            if(contr.imagePet.getLayoutY() < moveToY) {
+                stepToY = (moveToY - contr.imagePet.getLayoutY()) / 100d;
+                movingYSide = false;
+            } else if(contr.imagePet.getLayoutY() > moveToY) {
+                stepToY = (contr.imagePet.getLayoutY() - moveToY) / 100d;
+                movingYSide = true;
+            } else {
+                moveToY += 1d;
+                stepToY += 1d;
+                movingYSide = false;
+            }
 
             millisecond = 0;
+            movingXEnd = false;
+            movingYEnd = false;
             moving = true;
         } else {
+            //System.out.println(millisecond);
             millisecond++;
         }
     }
@@ -118,5 +146,10 @@ public class Timer extends AnimationTimer {
     public static int getRandomNumberIntsY() {
         Random rand = new Random();
         return rand.ints(105, (200 + 1)).findFirst().getAsInt();
+    }
+
+    public static int getRandomNumberIntsMilliS() {
+        Random rand = new Random();
+        return rand.ints(500, (1000 + 1)).findFirst().getAsInt();
     }
 }
