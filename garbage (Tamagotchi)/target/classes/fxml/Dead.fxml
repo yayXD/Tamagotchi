@@ -25,7 +25,6 @@
             <Image url="@../images/rip.png" />
          </image>
       </ImageView>
-      <Text layoutX="331.0" layoutY="301.0" strokeWidth="0.0" text="Name" textAlignment="CENTER" />
       <Button layoutX="19.0" layoutY="130.0" mnemonicParsing="false" onAction="#exitGame" text="Exit" />
       <Button layoutX="19.0" layoutY="90.0" mnemonicParsing="false" onAction="#menuGame" text="Main Menu" />
    </children>

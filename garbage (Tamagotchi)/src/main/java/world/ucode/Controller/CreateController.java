@@ -30,8 +30,13 @@ public class CreateController {
     @FXML
     public void createBaton() throws Exception {
         Database db = new Database();
-        int status = db.createPet(fieldName.getText(), fieldPass.getText(),
-                                    Double.parseDouble(fieldMaxHP.getText()), intImages);
+        int status = 0;
+        if(fieldName.getText().equals("") || fieldPass.getText().equals("") || fieldMaxHP.getText().equals("") || Double.parseDouble(fieldMaxHP.getText()) <= 0) {
+            status = 3;
+        } else {
+            status = db.createPet(fieldName.getText(), fieldPass.getText(),
+                        Double.parseDouble(fieldMaxHP.getText()), intImages);
+        }
         printStatus(status);
 
         if(status == 1) {
@@ -89,6 +94,9 @@ public class CreateController {
         }
         if(status == 2) {
             errText.setText("This name already exists.");
+        }
+        if(status == 3) {
+            errText.setText("Invalid data.");
         }
     }
 }

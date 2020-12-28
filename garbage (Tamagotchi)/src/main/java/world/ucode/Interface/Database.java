@@ -67,7 +67,7 @@ public class Database {
         int status = 3;
         connectDB();
 
-        System.out.println("the loadPet (Console)");
+        //System.out.println("the checkPet (Console)");
 
         String sql = "SELECT * FROM Pets WHERE name = \'" + name + "\';";
 
@@ -85,13 +85,13 @@ public class Database {
             System.out.println(err);
         }
 
-        /*if(password != pass) {
+        if(!pass.equals(password)) {
             System.out.println("invalid password \'" + password + "\' -- \'" + pass + "\' (Console)");
             System.out.println();
             status = 5;
             closeDB();
             return status;
-        }*/
+        }
 
         closeDB();
         return status;
@@ -100,7 +100,7 @@ public class Database {
     public void loadPet(String name) throws SQLException, ClassNotFoundException {
         connectDB();
 
-        System.out.println("the loadPet (Console)");
+        //System.out.println("the loadPet (Console)");
 
         String sql = "SELECT * FROM Pets WHERE name = \'" + name + "\';";
 
@@ -145,8 +145,6 @@ public class Database {
 
         String sql = "DELETE FROM Pets WHERE name = \'" + name + "\';";
         PreparedStatement pstmt = connect.prepareStatement(sql);
-
-        pstmt.setString(1, name);
 
         pstmt.executeUpdate();
 

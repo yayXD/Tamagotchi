@@ -35,7 +35,6 @@ public class Timer extends AnimationTimer {
 
         if(contr.health <= 0 || contr.happiness <= 0 || contr.hunger <= 0 || contr.thirst <= 0 || contr.cleanliness <= 0) {
             stop();
-
             Database db = new Database();
             db.deadPet(contr.namePet);
 
@@ -45,7 +44,12 @@ public class Timer extends AnimationTimer {
         } else {
             MovePet();
 
-            contr.health -= contr.health / 10000;
+            if(contr.happiness < 0.5 || contr.cleanliness < 0.5) {
+                contr.health -= 0.010;
+            } else {
+                contr.health -= 0.003;
+
+            }
             contr.hunger -= 0.00004;
             contr.happiness -= 0.00003;
             contr.thirst -= 0.00005;
